@@ -1,3 +1,5 @@
+import argparse
+
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -8,10 +10,16 @@ def produceChild (iq1, iq2) :
 	
 
 if __name__ == "__main__" :
-	numPeople = 1000
-	maxIterations = 50
+	parser = argparse.ArgumentParser()
+	parser.add_argument("--people", "-p", dest="people", default=1000, type=int, help="Starting number of people")
+	parser.add_argument("--iterations", "-i", dest="iterations", default=10, type=int, help="Iterations to run")
+	options = parser.parse_args()
+	
+	numPeople = options.people
+	maxIterations = options.iterations
 	
 	print("Starting population: %d. Maximum iterations: %d." % (numPeople, maxIterations))
+	
 	
 	iq_arr = np.random.normal(100, 15, numPeople) #each item in the list is the person's IQ
 	
@@ -62,11 +70,10 @@ if __name__ == "__main__" :
 		
 			#if y%500 == 0: print("Done %d." % y)
 		
-		
+		print("------")
 		print("Iteration #%d done." % (x+1))
 		print("Current population: %d. %d died without a mate." % (len(iq_arr), numPeople-len(iq_arr)))
 		numPeople = len(iq_arr)
-		print("------")
 	
 	iq_arr.sort()
 	
@@ -81,9 +88,6 @@ if __name__ == "__main__" :
 	plt.ylabel("Frequency density")
 
 	plt.show()
-	
-	
-	input() #wait to exit
 
 
 
