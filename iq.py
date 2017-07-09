@@ -11,7 +11,14 @@ if __name__ == "__main__" :
 	numPeople = 1000
 	maxIterations = 50
 	
+	print("Starting population: %d. Maximum iterations: %d." % (numPeople, maxIterations))
+	
 	iq_arr = np.random.normal(100, 15, numPeople) #each item in the list is the person's IQ
+	
+	plt.subplot(211)
+	plt.hist(iq_arr, 100)
+	plt.xlabel("IQ")
+	plt.ylabel("Frequency density")
 	
 #	print(iq_arr)
 	
@@ -28,7 +35,7 @@ if __name__ == "__main__" :
 				shuffled = np.column_stack( (prev_iq_arr, np.arange(numPeople)) )
 				np.random.shuffle(shuffled)
 				
-				mateID = -1
+				mateID = np.nan #probably unnecessary, but it means we'll get an error if it somehow gets used as the index
 				
 				for z in range(numPeople):
 					iq = shuffled[z][0]
@@ -53,7 +60,7 @@ if __name__ == "__main__" :
 				prev_iq_arr[y] = 10000000000 #so they don't get selected again
 				prev_iq_arr[mateID] = 10000000000
 		
-
+			#if y%500 == 0: print("Done %d." % y)
 		
 		
 		print("Iteration #%d done." % (x+1))
@@ -63,11 +70,15 @@ if __name__ == "__main__" :
 	
 	iq_arr.sort()
 	
-	plt.subplot(211)
-	plt.plot(iq_arr)
+	# plt.subplot(211)
+	# plt.plot(iq_arr)
+	# plt.xlabel("Number of people (cumulative)")
+	# plt.ylabel("IQ")
 
 	plt.subplot(212)
 	plt.hist(iq_arr, 100)
+	plt.xlabel("IQ")
+	plt.ylabel("Frequency density")
 
 	plt.show()
 	
